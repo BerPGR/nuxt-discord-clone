@@ -1,15 +1,16 @@
 <template>
   <v-app dark>
     <v-navigation-drawer
-    v-model="drawer"
-    width="315"
-    class="sBackground"
-    permanent
-    fixed
-    app
+      v-model="drawer"
+      width="315"
+      class="sBackground"
+      permanent
+      fixed
+      app
     >
-
+    
     <v-row class="fill-height" no-gutters>
+
 
       <v-navigation-drawer
       class="tBackground pt-3"
@@ -30,7 +31,7 @@
         </div>
 
         <div v-if="groups.length > 0">
-          <v-list-item-group v-model="selectedItem">
+          <v-list-item-group>
             <v-list-item></v-list-item>
           </v-list-item-group>
         </div>
@@ -62,17 +63,38 @@
 
       </v-navigation-drawer>
       
-      <v-toolbar
+      <div class="drawer-sections">
+        <v-toolbar
         height="48"
         flat
         class="sBackground py-2"
         elevation="1"
-      >
-        <v-btn x-small class="tBackground overflow-hidden mb-4 ml-4">Encontre uma conversa</v-btn>
-      </v-toolbar>
+        >
+          <v-btn x-small class="tBackground overflow-hidden mb-4 ml-4">Encontre uma conversa</v-btn>
+        </v-toolbar>
 
+        <div>
+          <v-list nav dense>
+            <v-list-item-group v-model="selectedItem">
+              <v-list-item v-for="(item, i) in items" :key="i">
+                <v-list-item-icon>
+                  <v-icon>{{ item.icon }}</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    {{ item.title }}
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+        </div>
+      </div>
+
+      
     </v-row>
-    </v-navigation-drawer>
+    
+  </v-navigation-drawer>
     <v-main class="mainBackground">
       <v-app-bar height="48" class="mainBackground" elevation="1"></v-app-bar>
       <v-container>
@@ -89,10 +111,27 @@ export default {
     return {
       drawer: true,
       selectedItem: 0,
+      items: [
+        { icon: 'mdi-account-multiple', title: 'Amigos'},
+        { icon: 'mdi-snowflake', title: 'Snowsgiving'},
+        { icon: 'mdi-tire', title: 'Nitro'},
+      ],
       groups: [
 
       ]
     }
   },
+
+  methods: {
+    addServer() {
+      return 1
+    }
+  }
 }
 </script>
+
+<style>
+  .drawer-sections {
+    width: 76%
+  }
+</style>
