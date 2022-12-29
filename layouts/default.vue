@@ -21,24 +21,28 @@
         <v-list-item>
           <v-avatar size="50" color="#6370F4">
             <v-btn fab icon>
-              <v-icon>mdi-discord</v-icon>
+              <v-icon color="white">mdi-discord</v-icon>
             </v-btn>
           </v-avatar>
         </v-list-item>
 
-        <div class="px-5 mt-2 mb-2">
+        <div class="px-5 mt-2">
           <v-divider></v-divider>
         </div>
 
         <div v-if="groups.length > 0">
           <v-list-item-group>
-            <v-list-item></v-list-item>
+            <v-list-item class="mt-2" v-for="(group, i) in groups" :key="i">
+              <v-avatar size="48" color="#36393F" class="pt-4">
+                <p>{{ group.serverName }}</p>
+              </v-avatar>
+            </v-list-item>
           </v-list-item-group>
         </div>
 
-        <v-list-item-group align="center">
+        <v-list-item-group align="center" class="mt-2">
           <v-avatar size="48">
-            <v-btn color="#36393F" fab elevation="0">
+            <v-btn color="#36393F" fab elevation="0" @click="addServer">
               <v-icon color="icons">mdi-plus</v-icon>
             </v-btn>
           </v-avatar>
@@ -77,9 +81,13 @@
           <v-list nav dense>
             <v-list-item-group v-model="selectedItem">
               <v-list-item v-for="(item, i) in items" :key="i">
-                <v-list-item-icon>
-                  <v-icon>{{ item.icon }}</v-icon>
+                <v-list-item-icon v-if="item.title == 'Snowsgiving'">
+                  <v-icon color="#5865F2">{{ item.icon }}</v-icon>
                 </v-list-item-icon>
+                <v-list-item-icon v-else>
+                  <v-icon color="#B2B4B6">{{ item.icon }}</v-icon>
+                </v-list-item-icon>
+
                 <v-list-item-content>
                   <v-list-item-title>
                     {{ item.title }}
@@ -96,7 +104,25 @@
     
   </v-navigation-drawer>
     <v-main class="mainBackground">
-      <v-app-bar height="48" class="mainBackground" elevation="1"></v-app-bar>
+      <v-app-bar height="48" class="mainBackground" elevation="1">
+
+
+        <v-spacer></v-spacer>
+
+        <v-btn icon small>
+          <v-icon color="#B2B4B6">mdi-message-plus</v-icon>
+        </v-btn>
+        
+        <v-divider vertical class="mx-3"></v-divider>
+        
+        <v-btn icon small>
+          <v-icon color="#B2B4B6">mdi-inbox</v-icon>
+        </v-btn>
+        
+        <v-btn icon small class="ml-3 mr-1">
+          <v-icon color="#B2B4B6">mdi-help-circle</v-icon>
+        </v-btn>
+      </v-app-bar>
       <v-container>
         <Nuxt />
       </v-container>
@@ -124,7 +150,24 @@ export default {
 
   methods: {
     addServer() {
-      return 1
+      const serverNameRef = []
+      const number = this.groups.length + 1
+      const serverNameRef2 = "Servidor de usuário".split(" ")
+      for (const i of serverNameRef2) {
+        serverNameRef.push(i.substr(0, 1))
+      }
+      const name = serverNameRef.join('')
+
+      const server = {
+        serverNumber: number,
+        serverName: name,
+        channels: [
+          { chanel: 'General', type: 'Text', icon: 'mdi-pound'},
+          { chanel: 'General', type: 'Voice', icon: 'mdi-volume-high'}
+        ]
+      }
+
+      this.groups.push(server)
     }
   }
 }
