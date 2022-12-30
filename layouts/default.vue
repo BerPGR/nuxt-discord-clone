@@ -38,14 +38,14 @@
 
         <div v-if="groups.length > 0">
           <v-list-item-group>
-            <v-list-item v-for="(group, i) in groups" :key="i" class="mt-2" @click="handleServer">
+            <v-list-item v-for="(group, i) in groups" :key="i" class="mt-2" @click="handleServer(group)">
               <v-tooltip right color="tooltip">
                 <template #activator="{ on }">
                   <v-avatar size="48" color="#36393F" class="pt-4" v-on="on">
                     <p>{{ group.serverName }}</p>
                   </v-avatar>
                 </template>
-                <span>Server</span>
+                <span>Server {{ group.serverNumber }}</span>
               </v-tooltip>
             </v-list-item>
           </v-list-item-group>
@@ -100,7 +100,7 @@
         class="sBackground py-2"
         elevation="1"
         >
-          <v-btn x-small class="tBackground overflow-hidden mb-4 ml-4">Encontre uma conversa</v-btn>
+          <v-btn small class="tBackground overflow-hidden mb-4 ml-11">Find a chat!</v-btn>
         </v-toolbar>
 
         <div>
@@ -224,8 +224,8 @@ export default {
       this.groups.push(server)
     },
 
-    handleServer() {
-
+    handleServer(group) {
+      this.$router.push({name: 'server', params: { gp: group }})
     }
   }
 }
