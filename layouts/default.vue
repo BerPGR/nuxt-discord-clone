@@ -23,7 +23,7 @@
           <v-avatar size="50" color="#6370F4">
             <v-tooltip right color="tooltip">  
               <template #activator="{ on }">
-                <v-btn fab icon v-on="on">
+                <v-btn fab icon v-on="on" to="/">
                   <v-icon color="white">mdi-discord</v-icon>
                 </v-btn>
               </template>            
@@ -38,7 +38,7 @@
 
         <div v-if="groups.length > 0">
           <v-list-item-group>
-            <v-list-item v-for="(group, i) in groups" :key="i" class="mt-2">
+            <v-list-item v-for="(group, i) in groups" :key="i" class="mt-2" @click="handleServer">
               <v-tooltip right color="tooltip">
                 <template #activator="{ on }">
                   <v-avatar size="48" color="#36393F" class="pt-4" v-on="on">
@@ -106,7 +106,12 @@
         <div>
           <v-list nav dense>
             <v-list-item-group v-model="selectedItem">
-              <v-list-item v-for="(item, i) in items" :key="i">
+              <v-list-item 
+                  v-for="(item, i) in items" 
+                  :key="i" 
+                  :href="item.title == 'Snowsgiving' || item.title == 'Nitro' ? item.route : 0"
+                  :to="item.title == 'Amigos' ? item.route : 0"
+                >
                 <v-list-item-icon v-if="item.title == 'Snowsgiving'">
                   <v-icon color="#5865F2">{{ item.icon }}</v-icon>
                 </v-list-item-icon>
@@ -130,24 +135,46 @@
     
   </v-navigation-drawer>
     <v-main class="mainBackground">
-      <v-app-bar height="48" class="mainBackground" elevation="1">
+      <v-app-bar app height="48" class="mainBackground" elevation="1">
 
 
         <v-spacer></v-spacer>
 
-        <v-btn icon small>
-          <v-icon color="#B2B4B6">mdi-message-plus</v-icon>
-        </v-btn>
+        <v-badge
+          :content="messages > 9 ? '10+' : messages"
+          :value="messages"
+          color="#5865F2"
+          overlap
+        >
+        <v-tooltip bottom color="tooltip">
+          <template #activator="{ on }">
+            <v-btn icon small @click="messages++" v-on="on">
+              <v-icon color="#B2B4B6">mdi-message-plus</v-icon>
+            </v-btn>
+          </template>
+          <span>New private group</span>
+        </v-tooltip>
+        </v-badge>
         
         <v-divider vertical class="mx-3"></v-divider>
+      
+        <v-tooltip bottom color="tooltip">
+          <template #activator="{ on }">
+            <v-btn icon small v-on="on">
+              <v-icon color="#B2B4B6">mdi-inbox</v-icon>
+            </v-btn>
+          </template>
+          <span>Inbox</span>
+        </v-tooltip>
         
-        <v-btn icon small>
-          <v-icon color="#B2B4B6">mdi-inbox</v-icon>
-        </v-btn>
-        
-        <v-btn icon small class="ml-3 mr-1">
-          <v-icon color="#B2B4B6">mdi-help-circle</v-icon>
-        </v-btn>
+        <v-tooltip bottom color="tooltip">
+          <template #activator="{ on }">
+            <v-btn icon small class="ml-3 mr-1" v-on="on">
+              <v-icon color="#B2B4B6">mdi-help-circle</v-icon>
+            </v-btn>
+          </template>
+          <span>Help</span>
+        </v-tooltip>
       </v-app-bar>
       <v-container>
         <Nuxt />
@@ -161,12 +188,13 @@ export default {
   name: 'DefaultLayout',
   data() {
     return {
+      messages: 0,
       drawer: true,
       selectedItem: 0,
       items: [
-        { icon: 'mdi-account-multiple', title: 'Amigos'},
-        { icon: 'mdi-snowflake', title: 'Snowsgiving'},
-        { icon: 'mdi-tire', title: 'Nitro'},
+        { icon: 'mdi-account-multiple', title: 'Amigos', route: '/friends'},
+        { icon: 'mdi-snowflake', title: 'Snowsgiving', route: 'https://discord.com/blog/snowsgiving-2022'},
+        { icon: 'mdi-tire', title: 'Nitro', route: 'https://discord.com/guild-discovery'},
       ],
       groups: [
 
@@ -194,6 +222,10 @@ export default {
       }
 
       this.groups.push(server)
+    },
+
+    handleServer() {
+
     }
   }
 }
