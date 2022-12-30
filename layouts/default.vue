@@ -20,9 +20,14 @@
       >
         <v-list-item>
           <v-avatar size="50" color="#6370F4">
-            <v-btn fab icon>
-              <v-icon color="white">mdi-discord</v-icon>
-            </v-btn>
+            <v-tooltip right color="tooltip">  
+              <template v-slot:activator="{ on }">
+                <v-btn v-on="on" fab icon>
+                  <v-icon color="white">mdi-discord</v-icon>
+                </v-btn>
+              </template>            
+              <span>Direct messages</span>
+            </v-tooltip>
           </v-avatar>
         </v-list-item>
 
@@ -32,9 +37,14 @@
 
         <div v-if="groups.length > 0">
           <v-list-item-group>
-            <v-list-item class="mt-2" v-for="(group, i) in groups" :key="i">
+            <v-list-item v-for="(group, i) in groups" :key="i" class="mt-2">
               <v-avatar size="48" color="#36393F" class="pt-4">
-                <p>{{ group.serverName }}</p>
+                <v-tooltip right color="tooltip">
+                  <template v-slot:activator="{ on }">
+                    <p v-on="on">{{ group.serverName }}</p>
+                  </template>
+                  <span>Server</span>
+                </v-tooltip>
               </v-avatar>
             </v-list-item>
           </v-list-item-group>
@@ -42,15 +52,25 @@
 
         <v-list-item-group align="center" class="mt-2">
           <v-avatar size="48">
-            <v-btn color="#36393F" fab elevation="0" @click="addServer">
-              <v-icon color="icons">mdi-plus</v-icon>
-            </v-btn>
+            <v-tooltip right color="tooltip">
+              <template v-slot:activator="{ on }">
+                <v-btn v-on="on" color="#36393F" fab elevation="0" @click="addServer">
+                  <v-icon color="icons">mdi-plus</v-icon>
+                </v-btn>
+              </template>
+              <span>Add a server</span>
+            </v-tooltip>
           </v-avatar>
 
           <v-avatar size="48" class="mt-2">
-            <v-btn color="#36393F" fab elevation="0">
-              <v-icon color="icons">mdi-compass</v-icon>
-            </v-btn>
+            <v-tooltip right color="tooltip">
+              <template v-slot:activator="{ on }">
+                <v-btn v-on="on" color="#36393F" fab elevation="0">
+                  <v-icon color="icons">mdi-compass</v-icon>
+                </v-btn>
+              </template>
+              <span>Search public servers</span>
+            </v-tooltip>
           </v-avatar>
 
           <div class="px-5 mt-2 mb-2">
@@ -58,9 +78,14 @@
           </div>
   
           <v-avatar size="48">
-            <v-btn fab color="#36393F">
-              <v-icon color="icons">mdi-tray-arrow-down</v-icon>
-            </v-btn>
+            <v-tooltip right color="tooltip">
+              <template v-slot:activator="{ on }">
+                <v-btn v-on="on" fab color="#36393F">
+                  <v-icon color="icons">mdi-tray-arrow-down</v-icon>
+                </v-btn>
+              </template>
+              <span>Download apps</span>
+            </v-tooltip>
           </v-avatar>
         </v-list-item-group>
 

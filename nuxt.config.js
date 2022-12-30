@@ -57,6 +57,7 @@ export default {
           mainBackground: "#36393F",
           sBackground: "#2F3136",
           tBackground: "#202225",
+          tooltip: "#000000"
         },
       },
     },
