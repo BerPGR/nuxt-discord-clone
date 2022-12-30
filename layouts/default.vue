@@ -13,16 +13,17 @@
 
 
       <v-navigation-drawer
-      class="tBackground pt-3"
+      class="tBackground"
+      height="100vh"
       permanent
       mini-variant
       mini-variant-width="74"
       >
-        <v-list-item>
+        <v-list-item class="pt-3">
           <v-avatar size="50" color="#6370F4">
             <v-tooltip right color="tooltip">  
-              <template v-slot:activator="{ on }">
-                <v-btn v-on="on" fab icon>
+              <template #activator="{ on }">
+                <v-btn fab icon v-on="on">
                   <v-icon color="white">mdi-discord</v-icon>
                 </v-btn>
               </template>            
@@ -38,14 +39,14 @@
         <div v-if="groups.length > 0">
           <v-list-item-group>
             <v-list-item v-for="(group, i) in groups" :key="i" class="mt-2">
-              <v-avatar size="48" color="#36393F" class="pt-4">
-                <v-tooltip right color="tooltip">
-                  <template v-slot:activator="{ on }">
-                    <p v-on="on">{{ group.serverName }}</p>
-                  </template>
-                  <span>Server</span>
-                </v-tooltip>
-              </v-avatar>
+              <v-tooltip right color="tooltip">
+                <template #activator="{ on }">
+                  <v-avatar size="48" color="#36393F" class="pt-4" v-on="on">
+                    <p>{{ group.serverName }}</p>
+                  </v-avatar>
+                </template>
+                <span>Server</span>
+              </v-tooltip>
             </v-list-item>
           </v-list-item-group>
         </div>
@@ -53,8 +54,8 @@
         <v-list-item-group align="center" class="mt-2">
           <v-avatar size="48">
             <v-tooltip right color="tooltip">
-              <template v-slot:activator="{ on }">
-                <v-btn v-on="on" color="#36393F" fab elevation="0" @click="addServer">
+              <template #activator="{ on }">
+                <v-btn color="#36393F" fab elevation="0" @click="addServer" v-on="on">
                   <v-icon color="icons">mdi-plus</v-icon>
                 </v-btn>
               </template>
@@ -64,8 +65,8 @@
 
           <v-avatar size="48" class="mt-2">
             <v-tooltip right color="tooltip">
-              <template v-slot:activator="{ on }">
-                <v-btn v-on="on" color="#36393F" fab elevation="0">
+              <template #activator="{ on }">
+                <v-btn color="#36393F" fab elevation="0" v-on="on">
                   <v-icon color="icons">mdi-compass</v-icon>
                 </v-btn>
               </template>
@@ -77,10 +78,10 @@
             <v-divider></v-divider>
           </div>
   
-          <v-avatar size="48">
+          <v-avatar size="48" class="mb-2">
             <v-tooltip right color="tooltip">
-              <template v-slot:activator="{ on }">
-                <v-btn v-on="on" fab color="#36393F">
+              <template #activator="{ on }">
+                <v-btn fab color="#36393F" v-on="on">
                   <v-icon color="icons">mdi-tray-arrow-down</v-icon>
                 </v-btn>
               </template>
@@ -198,8 +199,24 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
   .drawer-sections {
     width: 76%
+  }
+
+  ::-webkit-scrollbar {
+    width: 0;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
   }
 </style>
