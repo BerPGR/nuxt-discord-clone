@@ -23,7 +23,7 @@
           <v-avatar size="50" color="#6370F4">
             <v-tooltip right color="tooltip">  
               <template #activator="{ on }">
-                <v-btn fab icon v-on="on" to="/">
+                <v-btn fab icon to="/" v-on="on">
                   <v-icon color="white">mdi-discord</v-icon>
                 </v-btn>
               </template>            
@@ -36,16 +36,16 @@
           <v-divider></v-divider>
         </div>
 
-        <div v-if="groups.length > 0">
+        <div v-if="$store.state.servers.length > 0">
           <v-list-item-group>
-            <v-list-item v-for="(group, i) in groups" :key="i" class="mt-2" @click="handleServer(group)">
+            <v-list-item v-for="(server, i) in $store.state.servers" :key="i" class="mt-2" @click="handleServer(server)">
               <v-tooltip right color="tooltip">
                 <template #activator="{ on }">
                   <v-avatar size="48" color="#36393F" class="pt-4" v-on="on">
-                    <p>{{ group.serverName }}</p>
+                    <p>{{ server.serverName }}</p>
                   </v-avatar>
                 </template>
-                <span>Server {{ group.serverNumber }}</span>
+                <span>Server {{ server.serverNumber }}</span>
               </v-tooltip>
             </v-list-item>
           </v-list-item-group>
@@ -89,8 +89,6 @@
             </v-tooltip>
           </v-avatar>
         </v-list-item-group>
-
-
       </v-navigation-drawer>
       
       <div class="drawer-sections">
@@ -100,7 +98,7 @@
         class="sBackground py-2"
         elevation="1"
         >
-          <v-btn small class="tBackground overflow-hidden mb-4 ml-11">Find a chat!</v-btn>
+          <v-btn small class="tBackground overflow-hidden mb-4 ml-3 px-12">Find a chat!</v-btn>
         </v-toolbar>
 
         <div>
@@ -109,8 +107,8 @@
               <v-list-item 
                   v-for="(item, i) in items" 
                   :key="i" 
-                  :href="item.title == 'Snowsgiving' || item.title == 'Nitro' ? item.route : 0"
-                  :to="item.title == 'Amigos' ? item.route : 0"
+                  :href="item.title == 'Snowsgiving' || item.title == 'Nitro' ? item.route : ''"
+                  :to="item.title == 'Friends' ? item.route : ''"
                 >
                 <v-list-item-icon v-if="item.title == 'Snowsgiving'">
                   <v-icon color="#5865F2">{{ item.icon }}</v-icon>
@@ -141,7 +139,7 @@
         <v-spacer></v-spacer>
 
         <v-badge
-          :content="messages > 9 ? '10+' : messages"
+          :content="messages > 10 ? '10+' : messages"
           :value="messages"
           color="#5865F2"
           overlap
@@ -169,7 +167,7 @@
         
         <v-tooltip bottom color="tooltip">
           <template #activator="{ on }">
-            <v-btn icon small class="ml-3 mr-1" v-on="on">
+            <v-btn icon small class="ml-3 mr-1" v-on="on" @click="messages = 0">
               <v-icon color="#B2B4B6">mdi-help-circle</v-icon>
             </v-btn>
           </template>
@@ -192,27 +190,24 @@ export default {
       drawer: true,
       selectedItem: 0,
       items: [
-        { icon: 'mdi-account-multiple', title: 'Amigos', route: '/friends'},
+        { icon: 'mdi-account-multiple', title: 'Friends', route: '/friends'},
         { icon: 'mdi-snowflake', title: 'Snowsgiving', route: 'https://discord.com/blog/snowsgiving-2022'},
         { icon: 'mdi-tire', title: 'Nitro', route: 'https://discord.com/guild-discovery'},
       ],
-      groups: [
-
-      ]
     }
   },
 
   methods: {
     addServer() {
       const serverNameRef = []
-      const number = this.groups.length + 1
-      const serverNameRef2 = "Servidor de usuário".split(" ")
+      const number = this.$store.state.servers.length + 1
+      const serverNameRef2 = "User Test Server".split(" ")
       for (const i of serverNameRef2) {
         serverNameRef.push(i.substr(0, 1))
       }
       const name = serverNameRef.join('')
 
-      const server = {
+      const group = {
         serverNumber: number,
         serverName: name,
         channels: [
@@ -221,7 +216,7 @@ export default {
         ]
       }
 
-      this.groups.push(server)
+      this.$store.commit('ADD_SERVER', group)
     },
 
     handleServer(group) {
