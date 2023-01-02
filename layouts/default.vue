@@ -42,10 +42,10 @@
               <v-tooltip right color="tooltip">
                 <template #activator="{ on }">
                   <v-avatar size="48" color="#36393F" class="pt-4" v-on="on">
-                    <p>{{ server.serverName }}</p>
+                    <p>{{ server.serverAcronym }}</p>
                   </v-avatar>
                 </template>
-                <span>Server {{ server.serverNumber }}</span>
+                <span>{{ server.serverName }} {{ server.serverNumber }}</span>
               </v-tooltip>
             </v-list-item>
           </v-list-item-group>
@@ -201,14 +201,16 @@ export default {
     addServer() {
       const serverNameRef = []
       const number = this.$store.state.servers.length + 1
-      const serverNameRef2 = "User Test Server".split(" ")
+      const serverNameRef2 = "User's Test Server".split(" ")
       for (const i of serverNameRef2) {
         serverNameRef.push(i.substr(0, 1))
       }
-      const name = serverNameRef.join('')
+      const name = serverNameRef2.join(' ')
+      const acronym = serverNameRef.join('')
 
       const group = {
         serverNumber: number,
+        serverAcronym: acronym,
         serverName: name,
         channels: [
           { chanel: 'General', type: 'Text', icon: 'mdi-pound'},
