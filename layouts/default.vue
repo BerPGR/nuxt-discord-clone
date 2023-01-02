@@ -19,7 +19,7 @@
       mini-variant
       mini-variant-width="74"
       >
-        <v-list-item class="pt-3">
+        <v-list-item class="pt-3" @click="$store.commit('DRAWER_FALSE')">
           <v-avatar size="50" color="#6370F4">
             <v-tooltip right color="tooltip">  
               <template #activator="{ on }">
@@ -89,6 +89,7 @@
             </v-tooltip>
           </v-avatar>
         </v-list-item-group>
+
       </v-navigation-drawer>
       
       <div class="drawer-sections">
@@ -101,7 +102,7 @@
           <v-btn small class="tBackground overflow-hidden mb-4 ml-3 px-12">Find a chat!</v-btn>
         </v-toolbar>
 
-        <div>
+        <div v-if="$store.state.layout.status === false">
           <v-list nav dense>
             <v-list-item-group v-model="selectedItem">
               <v-list-item 
@@ -125,6 +126,9 @@
               </v-list-item>
             </v-list-item-group>
           </v-list>
+        </div>
+        <div v-else>
+          
         </div>
       </div>
 
@@ -194,6 +198,16 @@ export default {
         { icon: 'mdi-snowflake', title: 'Snowsgiving', route: 'https://discord.com/blog/snowsgiving-2022'},
         { icon: 'mdi-tire', title: 'Nitro', route: 'https://discord.com/guild-discovery'},
       ],
+      layout: {}
+    }
+  },
+
+  computed: {
+    getLayout() {
+      return this.$store.state.layout
+    },
+    setLayout(v) {
+      this.layout = v
     }
   },
 
@@ -222,6 +236,7 @@ export default {
     },
 
     handleServer(group) {
+      this.$store.commit('CHANGE_DRAWER_LAYOUT', group.channels)
       this.$router.push({name: 'server', params: { gp: group }})
     }
   }
