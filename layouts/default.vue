@@ -143,16 +143,16 @@
         <div v-if="$store.state.appBarLayout.status === true" class="d-flex align-center">
 
           <v-icon color="#8E9297">mdi-account-multiple</v-icon>
-          <p class="ml-2 mt-4 font-weight-bold">Friends</p>
+          <p class="ml-2 mr-2 mt-4 font-weight-bold">Friends</p>
           
           <v-divider inset vertical class="mx-4"></v-divider>
           
           <v-list class="mainBackground">
             <v-list-item-group class="mainBackground">
-              <v-btn text elevation="0" class="mainBackground" small>{{ $store.state.appBarLayout.choices[0] }}</v-btn>
-              <v-btn text elevation="0" class="mainBackground" small>{{ $store.state.appBarLayout.choices[1] }}</v-btn>
-              <v-btn text elevation="0" class="mainBackground" small>{{ $store.state.appBarLayout.choices[2] }}</v-btn>
-              <v-btn text elevation="0" class="mainBackground" small>{{ $store.state.appBarLayout.choices[3] }}</v-btn>
+              <v-btn text elevation="0" class="mainBackground" color="#B2B4B6" small>{{ $store.state.appBarLayout.choices[0] }}</v-btn>
+              <v-btn text elevation="0" class="mainBackground" color="#B2B4B6" small>{{ $store.state.appBarLayout.choices[1] }}</v-btn>
+              <v-btn text elevation="0" class="mainBackground" color="#B2B4B6" small>{{ $store.state.appBarLayout.choices[2] }}</v-btn>
+              <v-btn text elevation="0" class="mainBackground" color="#B2B4B6" small>{{ $store.state.appBarLayout.choices[3] }}</v-btn>
               <v-btn text elevation="0" class="mainBackground" color="icons" small>{{ $store.state.appBarLayout.choices[4] }}</v-btn>
             </v-list-item-group>
           </v-list>
