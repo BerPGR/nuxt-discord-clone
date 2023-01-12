@@ -21,7 +21,7 @@
       >
         <v-list-item class="pt-3" @click="$store.commit('DRAWER_FALSE')">
           <v-avatar size="50" color="#6370F4">
-            <v-tooltip right color="tooltip">  
+            <v-tooltip right color="tooltip" open-on-click>  
               <template #activator="{ on }">
                 <v-btn fab icon to="/" v-on="on">
                   <v-icon color="white">mdi-discord</v-icon>
@@ -110,6 +110,7 @@
                   :key="i" 
                   :href="item.title == 'Snowsgiving' || item.title == 'Nitro' ? item.route : ''"
                   :to="item.title == 'Friends' ? item.route : ''"
+                  @click="item.title =='Friends' ? $store.commit('CHANGE_APP_BAR_LAYOUT') : ''"
                 >
                 <v-list-item-icon v-if="item.title == 'Snowsgiving'">
                   <v-icon color="#5865F2">{{ item.icon }}</v-icon>
@@ -139,6 +140,23 @@
     <v-main class="mainBackground">
       <v-app-bar app height="48" class="mainBackground" elevation="1">
 
+        <div v-if="$store.state.appBarLayout.status === true" class="d-flex align-center">
+
+          <v-icon color="#8E9297">mdi-account-multiple</v-icon>
+          <p class="ml-2 mt-4 font-weight-bold">Friends</p>
+          
+          <v-divider inset vertical class="mx-4"></v-divider>
+          
+          <v-list class="mainBackground">
+            <v-list-item-group class="mainBackground">
+              <v-btn text elevation="0" class="mainBackground" small>{{ $store.state.appBarLayout.choices[0] }}</v-btn>
+              <v-btn text elevation="0" class="mainBackground" small>{{ $store.state.appBarLayout.choices[1] }}</v-btn>
+              <v-btn text elevation="0" class="mainBackground" small>{{ $store.state.appBarLayout.choices[2] }}</v-btn>
+              <v-btn text elevation="0" class="mainBackground" small>{{ $store.state.appBarLayout.choices[3] }}</v-btn>
+              <v-btn text elevation="0" class="mainBackground" color="icons" small>{{ $store.state.appBarLayout.choices[4] }}</v-btn>
+            </v-list-item-group>
+          </v-list>
+        </div>
 
         <v-spacer></v-spacer>
 
@@ -199,15 +217,6 @@ export default {
         { icon: 'mdi-tire', title: 'Nitro', route: 'https://discord.com/guild-discovery'},
       ],
       layout: {}
-    }
-  },
-
-  computed: {
-    getLayout() {
-      return this.$store.state.layout
-    },
-    setLayout(v) {
-      this.layout = v
     }
   },
 
